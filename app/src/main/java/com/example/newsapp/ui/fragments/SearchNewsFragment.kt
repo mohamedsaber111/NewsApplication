@@ -53,20 +53,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 }
             }
         }
-//        etSearch.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
 
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {

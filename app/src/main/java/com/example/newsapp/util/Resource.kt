@@ -14,3 +14,4 @@ sealed class Resource<T>(
 
     class Loading<T> : Resource<T>()
 }
+

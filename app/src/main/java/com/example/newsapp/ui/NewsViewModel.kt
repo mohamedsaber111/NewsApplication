@@ -8,6 +8,7 @@ import android.net.ConnectivityManager.TYPE_WIFI
 import android.net.NetworkCapabilities.*
 import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -74,17 +75,19 @@ class NewsViewModel(
     private fun handlingSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                searchNewsPage++
 
-                if (searchNewsResponse == null) {
+                if (searchNewsPage==1) {
                     searchNewsResponse = resultResponse
                 } else {
                     //if not first page
                     val oldArticles = searchNewsResponse?.articles
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
+                    searchNewsResponse?.articles =oldArticles ?: mutableListOf()
                 }
-                return Resource.Success(searchNewsResponse ?: resultResponse)
+                searchNewsPage++
+                Log.d("newsViewModel.article","${searchNewsResponse!!.articles}")
+                return Resource.Success( resultResponse)
             }
         }
         return Resource.Error(response.message(), response.body())
